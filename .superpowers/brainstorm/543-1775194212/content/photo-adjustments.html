@@ -1,0 +1,291 @@
+<style>
+  body { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
+  .page-title { font-size: 1.1rem; font-weight: 600; color: #2c1a0e; margin-bottom: 0.25rem; }
+  .page-sub { font-size: 0.85rem; color: #8b5e3c; margin-bottom: 2rem; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 12px rgba(44,26,14,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(44,26,14,0.15); }
+  .card.selected { border-color: #b07848; box-shadow: 0 4px 20px rgba(176,120,72,0.3); }
+
+  .card-label {
+    background: #2c1a0e;
+    color: #f0e6d8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.45rem 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-label .tag {
+    background: #b07848;
+    color: #fff;
+    border-radius: 4px;
+    padding: 0.1rem 0.45rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+  }
+
+  .card-preview {
+    padding: 0.75rem;
+    background: #faf6f0;
+  }
+
+  /* Shared bio card shell */
+  .bio-mock {
+    display: flex;
+    align-items: stretch;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border-left: 3px solid #b07848;
+    box-shadow: 0 1px 6px rgba(44,26,14,0.08);
+    min-height: 160px;
+  }
+  .bio-mock .text-col {
+    flex: 1;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.15rem;
+  }
+  .bio-mock .name { font-size: 1.05rem; font-weight: 700; color: #2c1a0e; line-height: 1.2; }
+  .bio-mock .title { font-size: 0.65rem; color: #8b5e3c; }
+  .bio-mock .divider { height: 1px; background: #e8ddd4; margin: 0.5rem 0; }
+  .bio-mock .lines div { height: 4.5px; background: #e8ddd4; border-radius: 2px; margin-bottom: 5px; }
+  .bio-mock .badge {
+    display: inline-block;
+    background: #f0e6d8;
+    color: #8b5e3c;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Photo variants */
+  .photo-col {
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* A1: 現況 - 255px, top center, subtle blend */
+  .photo-a1 { width: 90px; }
+  .photo-a1 img { object-position: top center; }
+  .photo-a1::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to left, transparent 75%, rgba(255,255,255,.3) 100%),
+      linear-gradient(to top, rgba(44,26,14,.15) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  /* A2: 照片加寬, 無遮罩 */
+  .photo-a2 { width: 120px; }
+  .photo-a2 img { object-position: top center; }
+
+  /* A3: 照片加寬, 強漸層融合 */
+  .photo-a3 { width: 120px; }
+  .photo-a3 img { object-position: top center; }
+  .photo-a3::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to left, transparent 50%, rgba(255,255,255,.75) 100%);
+    pointer-events: none;
+  }
+
+  /* A4: 照片超寬, 強漸層 (雜誌風) */
+  .photo-a4 { width: 148px; }
+  .photo-a4 img { object-position: top center; }
+  .photo-a4::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to left, transparent 40%, rgba(255,255,255,.85) 100%),
+      linear-gradient(to top, rgba(44,26,14,.2) 0%, transparent 25%);
+    pointer-events: none;
+  }
+
+  .card-desc {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #f0e6d8;
+  }
+  .card-desc h3 { font-size: 0.82rem; font-weight: 700; color: #2c1a0e; margin: 0 0 0.2rem; }
+  .card-desc p { font-size: 0.72rem; color: #6b4c30; margin: 0; line-height: 1.5; }
+  .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.35rem; }
+  .tag-item { font-size: 0.65rem; padding: 0.1rem 0.45rem; border-radius: 4px; font-weight: 600; }
+  .tag-change { background: #e8f0e0; color: #3d6b2e; }
+  .tag-keep { background: #f0e6d8; color: #8b5e3c; }
+</style>
+
+<p class="page-title">全圖直式 — 調整方向</p>
+<p class="page-sub">以 A 方向為基礎，四種細節調整，點選你偏好的版本</p>
+
+<div class="cards">
+
+  <!-- Current -->
+  <div class="card" data-choice="a1" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>現況</span>
+      <span class="tag">參考基準</span>
+    </div>
+    <div class="card-preview">
+      <div class="bio-mock">
+        <div class="text-col">
+          <span class="badge">課程負責人</span>
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師</div>
+          <div class="divider"></div>
+          <div class="lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+        <div class="photo-col photo-a1">
+          <img src="/images/lhl.png" alt="林夏蘭">
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>現況</h3>
+      <p>255px 寬、淡左側遮罩。</p>
+      <div class="tag-row">
+        <span class="tag-keep">寬度 255px</span>
+        <span class="tag-keep">淡遮罩</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- A2: Wider, no overlay -->
+  <div class="card" data-choice="a2" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>調整 1 — 加寬 · 無遮罩</span>
+    </div>
+    <div class="card-preview">
+      <div class="bio-mock">
+        <div class="text-col">
+          <span class="badge">課程負責人</span>
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師</div>
+          <div class="divider"></div>
+          <div class="lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+        <div class="photo-col photo-a2">
+          <img src="/images/lhl.png" alt="林夏蘭">
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>加寬 + 無遮罩</h3>
+      <p>照片比例更大，無漸層遮蓋，邊界清晰，最像雜誌版型。</p>
+      <div class="tag-row">
+        <span class="tag-change">寬度加大</span>
+        <span class="tag-change">移除遮罩</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- A3: Wider, strong blend -->
+  <div class="card" data-choice="a3" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>調整 2 — 加寬 · 強融合</span>
+    </div>
+    <div class="card-preview">
+      <div class="bio-mock">
+        <div class="text-col">
+          <span class="badge">課程負責人</span>
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師</div>
+          <div class="divider"></div>
+          <div class="lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+        <div class="photo-col photo-a3">
+          <img src="/images/lhl.png" alt="林夏蘭">
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>加寬 + 強漸層融合</h3>
+      <p>照片左側以白色漸層過渡到文字區，視覺融合感強，偏柔和風。</p>
+      <div class="tag-row">
+        <span class="tag-change">寬度加大</span>
+        <span class="tag-change">加強漸層</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- A4: Much wider, editorial magazine -->
+  <div class="card" data-choice="a4" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>調整 3 — 超寬 · 雜誌風</span>
+    </div>
+    <div class="card-preview">
+      <div class="bio-mock">
+        <div class="text-col">
+          <span class="badge">課程負責人</span>
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師</div>
+          <div class="divider"></div>
+          <div class="lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+        <div class="photo-col photo-a4">
+          <img src="/images/lhl.png" alt="林夏蘭">
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>超寬 + 強漸層（雜誌封面感）</h3>
+      <p>照片佔卡片近 40%，漸層讓照片與背景融合，視覺張力最強。</p>
+      <div class="tag-row">
+        <span class="tag-change">寬度大幅加大</span>
+        <span class="tag-change">雙向漸層</span>
+      </div>
+    </div>
+  </div>
+
+</div>

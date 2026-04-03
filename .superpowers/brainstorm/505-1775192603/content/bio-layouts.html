@@ -1,0 +1,238 @@
+<h2>Bio 區塊排版方案</h2>
+<p class="subtitle">圖片移至右側 — 三種排版配置，點選你偏好的方案</p>
+
+<style>
+  /* Reuse site tokens */
+  :root {
+    --navy-dark: #2c1a0e;
+    --navy: #3d2b1f;
+    --navy-mid: #5a3e2b;
+    --gold: #8b5e3c;
+    --gold-pale: #f5ede4;
+    --text: #3d2b1f;
+    --text-muted: #7a6555;
+    --border-soft: rgba(139,94,60,.18);
+    --card: #fff;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow-sm: 0 2px 10px rgba(0,0,0,.07);
+    --serif: 'Noto Serif TC', Georgia, serif;
+    --sans: 'Noto Sans TC', sans-serif;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@700&display=swap');
+
+  .preview-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .bio-preview {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--gold);
+    overflow: hidden;
+    position: relative;
+    transform: scale(1);
+    font-size: 13px;
+  }
+
+  /* === A: Photo Right Same Width === */
+  .layout-a { display: flex; align-items: stretch; min-height: 200px; }
+  .layout-a .p-content { flex: 1; padding: 20px 24px; }
+  .layout-a .p-photo { width: 140px; flex-shrink: 0; background: linear-gradient(135deg, #d4c5b5 0%, #b8a898 100%); position: relative; overflow: hidden; }
+  .layout-a .p-photo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to left, transparent 70%, rgba(255,255,255,.5) 100%);
+  }
+  .layout-a .p-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+  /* === B: Photo Right Tall + Stats Footer === */
+  .layout-b { display: flex; flex-direction: column; }
+  .layout-b .p-main { display: flex; align-items: stretch; }
+  .layout-b .p-content { flex: 1; padding: 20px 24px 16px; }
+  .layout-b .p-photo { width: 150px; flex-shrink: 0; background: linear-gradient(135deg, #d4c5b5 0%, #b8a898 100%); position: relative; overflow: hidden; }
+  .layout-b .p-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .layout-b .p-stats-bar { background: var(--gold-pale); border-top: 1px solid var(--border-soft); display: grid; grid-template-columns: repeat(4, 1fr); }
+  .layout-b .p-stats-bar .sb-item { padding: 10px 8px; text-align: center; border-right: 1px solid var(--border-soft); }
+  .layout-b .p-stats-bar .sb-item:last-child { border-right: none; }
+
+  /* === C: Wide Photo Panel + Text Below === */
+  .layout-c { display: flex; flex-direction: column; }
+  .layout-c .p-upper { display: flex; align-items: stretch; }
+  .layout-c .p-left { flex: 1; padding: 20px 24px; }
+  .layout-c .p-photo { width: 180px; flex-shrink: 0; background: linear-gradient(135deg, #d4c5b5 0%, #b8a898 100%); position: relative; overflow: hidden; min-height: 160px; }
+  .layout-c .p-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .layout-c .p-lower { padding: 0 24px 18px; border-top: 1px solid var(--border-soft); }
+
+  /* Shared inner components */
+  .p-identity { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-bottom: 8px; }
+  .p-role { font-family: var(--sans); font-size: 9px; font-weight: 500; color: var(--gold); letter-spacing: .15em; background: var(--gold-pale); padding: 2px 7px; border-radius: 3px; border: 1px solid rgba(139,94,60,.3); }
+  .p-name { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--navy-dark); letter-spacing: .08em; line-height: 1.1; }
+  .p-title { font-family: var(--sans); font-size: 11px; color: var(--text-muted); }
+  .p-contact { font-family: var(--sans); font-size: 11px; color: var(--text-muted); margin-bottom: 10px; display: flex; gap: 12px; }
+  .p-contact span { display: flex; align-items: center; gap: 4px; }
+  .p-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+  .p-stats-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 10px; }
+  .p-stat { background: var(--gold-pale); border: 1px solid rgba(139,94,60,.2); border-radius: var(--radius-sm); padding: 7px 6px; text-align: center; }
+  .p-stat .sn { font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--navy-dark); line-height: 1; }
+  .p-stat .sl { font-family: var(--sans); font-size: 9px; color: var(--text-muted); margin-top: 3px; }
+  .p-text { font-family: var(--sans); font-size: 11px; line-height: 1.7; color: var(--text); font-weight: 300; }
+  .p-text + .p-text { margin-top: 5px; }
+  .p-divider { border: none; border-bottom: 1px solid var(--border-soft); margin: 8px 0 10px; }
+  .p-badge { display: inline-block; background: var(--gold-pale); border: 1px solid var(--border-soft); border-radius: 3px; font-family: var(--sans); font-size: 9px; color: var(--gold); padding: 2px 7px; margin-bottom: 10px; }
+  .sb-num { font-family: var(--serif); font-size: 13px; font-weight: 700; color: var(--navy-dark); }
+  .sb-lbl { font-family: var(--sans); font-size: 9px; color: var(--text-muted); }
+
+  /* Photo placeholder overlay */
+  .photo-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; }
+  .photo-caption { font-family: var(--sans); font-size: 9px; color: rgba(255,255,255,.8); background: rgba(0,0,0,.3); padding: 2px 8px; border-radius: 10px; }
+
+  .cards { gap: 28px; }
+  .card { border: 2px solid transparent; border-radius: 12px; overflow: visible; }
+  .card.selected { border-color: #4f8ef7; }
+  .card-image { padding: 0; overflow: hidden; border-radius: 10px 10px 0 0; }
+  .card-body { padding: 14px 16px 16px; }
+  .card-body h3 { font-family: var(--sans); font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .card-body p { font-family: var(--sans); font-size: 12px; line-height: 1.5; color: #666; }
+</style>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="card-image">
+      <div class="preview-label" style="padding: 14px 16px 0 16px;">方案 A — 圖片右移，維持現有結構</div>
+      <div style="padding: 10px 16px 14px;">
+        <div class="bio-preview layout-a">
+          <div class="p-content">
+            <div class="p-identity">
+              <span class="p-role">課程負責人</span>
+              <span class="p-name">林夏蘭</span>
+              <span class="p-title">助理管理師</span>
+            </div>
+            <div class="p-contact">
+              <span>📞 (06)2134413 #03307</span>
+              <span>✉ 03307@cpc.tw</span>
+            </div>
+            <div class="p-stats">
+              <div class="p-stat"><div class="sn">650+</div><div class="sl">公開班次</div></div>
+              <div class="p-stat"><div class="sn">6,000+</div><div class="sl">學員人次</div></div>
+              <div class="p-stat"><div class="sn">30</div><div class="sl">企業客戶</div></div>
+              <div class="p-stat"><div class="sn">55</div><div class="sl">企業內訓</div></div>
+            </div>
+            <hr class="p-divider">
+            <p class="p-text">現任財團法人中國生產力中心台南服務處教育訓練承辦人，具近四年專職辦訓實務經驗。</p>
+            <p class="p-text">累積辦理公開班課程超過<strong>650班次</strong>，服務逾<strong>6,000人次</strong>學員。</p>
+          </div>
+          <div class="p-photo">
+            <img src="/images/lhl.png" alt="林夏蘭" onerror="this.style.display='none'">
+            <div class="photo-overlay"><span class="photo-caption">林夏蘭</span></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to left,transparent 70%,rgba(255,255,255,.45) 100%);pointer-events:none;z-index:1;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>簡潔右移</h3>
+      <p>最小改動。原有布局不變，僅將照片欄換至右側。漸層由右向左淡出。適合希望風格延續的情況。</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="card-image">
+      <div class="preview-label" style="padding: 14px 16px 0 16px;">方案 B — 照片右側全高，統計數字移至底部橫帶</div>
+      <div style="padding: 10px 16px 14px;">
+        <div class="bio-preview layout-b">
+          <div class="p-main">
+            <div class="p-content">
+              <div class="p-identity">
+                <span class="p-role">課程負責人</span>
+                <span class="p-name">林夏蘭</span>
+                <span class="p-title">助理管理師</span>
+              </div>
+              <div class="p-contact">
+                <span>📞 (06)2134413 #03307</span>
+                <span>✉ 03307@cpc.tw</span>
+              </div>
+              <hr class="p-divider" style="margin-top:6px;">
+              <p class="p-text">現任財團法人中國生產力中心台南服務處教育訓練承辦人，具近四年專職辦訓實務經驗。過去曾任語文中心業務部、工業區協會秘書及公會總幹事，熟悉產業、公協會與企業組織運作模式，具高度溝通協調與專案統籌能力。</p>
+              <p class="p-text" style="margin-top:5px;">擅長課程規劃設計、招生廣宣企劃與講師專業媒合，協助企業有效建構年度人才訓練藍圖。</p>
+            </div>
+            <div class="p-photo" style="width:150px;">
+              <img src="/images/lhl.png" alt="林夏蘭" onerror="this.style.display='none'">
+              <div class="photo-overlay"><span class="photo-caption">林夏蘭</span></div>
+            </div>
+          </div>
+          <div class="p-stats-bar">
+            <div class="sb-item"><div class="sb-num">650+</div><div class="sb-lbl">公開班次</div></div>
+            <div class="sb-item"><div class="sb-num">6,000+</div><div class="sb-lbl">學員人次</div></div>
+            <div class="sb-item"><div class="sb-num">30</div><div class="sb-lbl">企業客戶</div></div>
+            <div class="sb-item"><div class="sb-num">55</div><div class="sb-lbl">企業內訓</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>統計橫帶</h3>
+      <p>照片佔滿右側全高，介紹文字在左。統計數字移至卡片底部橫帶，形成視覺收尾。文字閱讀空間更寬敞。</p>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="card-image">
+      <div class="preview-label" style="padding: 14px 16px 0 16px;">方案 C — 大幅照片右側，介紹文字獨立成下方區塊</div>
+      <div style="padding: 10px 16px 14px;">
+        <div class="bio-preview layout-c">
+          <div class="p-upper">
+            <div class="p-left">
+              <div class="p-identity">
+                <span class="p-role">課程負責人</span>
+                <span class="p-name">林夏蘭</span>
+                <span class="p-title">助理管理師</span>
+              </div>
+              <div class="p-contact">
+                <span>📞 (06)2134413 #03307</span><br>
+                <span>✉ 03307@cpc.tw</span>
+              </div>
+              <div style="margin-top: 10px;">
+                <div class="p-stats-2">
+                  <div class="p-stat"><div class="sn">650+</div><div class="sl">公開班次</div></div>
+                  <div class="p-stat"><div class="sn">6,000+</div><div class="sl">學員人次</div></div>
+                  <div class="p-stat"><div class="sn">30</div><div class="sl">企業客戶</div></div>
+                  <div class="p-stat"><div class="sn">55</div><div class="sl">企業內訓</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="p-photo">
+              <img src="/images/lhl.png" alt="林夏蘭" onerror="this.style.display='none'">
+              <div class="photo-overlay"><span class="photo-caption">林夏蘭</span></div>
+            </div>
+          </div>
+          <div class="p-lower">
+            <hr class="p-divider">
+            <p class="p-text">現任財團法人中國生產力中心台南服務處教育訓練承辦人，具近四年專職辦訓實務經驗。過去曾任語文中心業務部、工業區協會秘書及公會總幹事。</p>
+            <p class="p-text" style="margin-top:5px;">擅長課程規劃設計、招生廣宣企劃與講師專業媒合，協助企業有效建構年度人才訓練藍圖。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>上下分層</h3>
+      <p>上半部：姓名、聯絡資訊、統計數字（2×2）搭配右側大幅照片。介紹文字獨立在下方橫跨全寬，視覺層次分明。</p>
+    </div>
+  </div>
+
+</div>

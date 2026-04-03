@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>林夏蘭 助理管理師 — 財團法人中國生產力中心台南服務處</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Design Tokens ─── */
+    :root {
+      --navy:        #8b5e3c;
+      --navy-dark:   #2c1a0e;
+      --navy-mid:    #a87048;
+      --gold:        #8b5e3c;
+      --gold-light:  #b07848;
+      --gold-pale:   #f0e6d8;
+      --bg:          #faf6f0;
+      --card:        #ffffff;
+      --text:        #1e120a;
+      --text-muted:  #7a5a42;
+      --text-faint:  #a08060;
+      --border:      #e2d4c2;
+      --border-soft: #ede5d8;
+      --shadow-sm:   0 1px 4px rgba(44,26,14,.07), 0 4px 16px rgba(44,26,14,.08);
+      --shadow-lg:   0 4px 8px rgba(44,26,14,.1), 0 12px 40px rgba(139,94,60,.18);
+      --radius:      10px;
+      --radius-sm:   7px;
+      --container:   860px;
+      --serif:       "Noto Serif TC", "Songti TC", "SimSun", serif;
+      --sans:        "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      /* Subtle crosshatch texture */
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(139,94,60,.04) 39px,
+          rgba(139,94,60,.04) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(139,94,60,.04) 39px,
+          rgba(139,94,60,.04) 40px
+        );
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Page Load Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    .reveal {
+      opacity: 0;
+      animation: fadeUp 0.65s cubic-bezier(.22,.68,0,1.2) forwards;
+    }
+    .d1 { animation-delay: .08s; }
+    .d2 { animation-delay: .20s; }
+    .d3 { animation-delay: .30s; }
+    .d4 { animation-delay: .38s; }
+    .d5 { animation-delay: .46s; }
+    .d6 { animation-delay: .54s; }
+    .d7 { animation-delay: .60s; }
+
+    /* ─── Header ─── */
+    header {
+      background: var(--navy-dark);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .header-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 18px 28px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-logo {
+      height: 44px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .header-logo-text {
+      display: none;
+      color: #fff;
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .header-nav-link {
+      color: rgba(255,255,255,.72);
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-decoration: none;
+      position: relative;
+      transition: color .2s;
+    }
+
+    .header-nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold-light);
+      transition: width .25s ease;
+    }
+
+    .header-nav-link:hover {
+      color: rgba(255,255,255,1);
+    }
+
+    .header-nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Cognac gradient rule at header bottom */
+    header::after {
+      content: "";
+      display: block;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        var(--gold) 0%,
+        var(--gold-light) 30%,
+        rgba(139,94,60,.2) 70%,
+        transparent 100%
+      );
+    }
+
+    /* ─── Main ─── */
+    main {
+      flex: 1;
+      max-width: var(--container);
+      width: 100%;
+      margin: 0 auto;
+      padding: 44px 28px 68px;
+    }
+
+    /* ─── Bio Card ─── */
+    .bio-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border-top: none;
+      border-left: 4px solid var(--gold);
+      margin-bottom: 44px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .bio-identity {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px 16px;
+      margin-bottom: 14px;
+    }
+
+    .bio-avatar { display: none; }
+
+    .bio-identity-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .bio-role {
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      background: var(--gold-pale);
+      padding: 3px 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(139,94,60,.3);
+      align-self: flex-start;
+    }
+
+    .bio-name {
+      font-family: var(--serif);
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      letter-spacing: .1em;
+      line-height: 1.1;
+    }
+
+    .bio-title {
+      font-family: var(--sans);
+      font-size: 14.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      letter-spacing: .05em;
+      align-self: flex-start;
+    }
+
+    /* ─── Contact ─── */
+    .bio-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 28px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .contact-item svg {
+      width: 14px;
+      height: 14px;
+      color: var(--navy-mid);
+      flex-shrink: 0;
+      stroke: currentColor;
+    }
+
+    .contact-item a {
+      color: var(--navy-mid);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .18s;
+    }
+
+    .contact-item a:hover { color: var(--gold); }
+
+    /* ─── Bio Photo Column (magazine bleed) ─── */
+    .bio-photo {
+      width: 300px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bio-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    /* Soft left-edge blend */
+    .bio-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to left, transparent 50%, rgba(255,255,255,.75) 100%);
+      pointer-events: none;
+    }
+
+    /* ─── Bio Content Column ─── */
+    .bio-content {
+      flex: 1;
+      min-width: 0;
+      padding: 32px 40px;
+      position: relative;
+      z-index: 0;
+      background: linear-gradient(160deg, #fefcfa 0%, #fff 60%);
+    }
+
+    /* ─── Stat Strip ─── */
+    .bio-stats {
+      display: flex;
+      align-items: stretch;
+      background: var(--gold-pale);
+      border: 1px solid rgba(139,94,60,.18);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-top: 20px;
+      margin-bottom: 22px;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 12px 10px 10px;
+      text-align: center;
+      border-right: 1px solid rgba(139,94,60,.15);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      letter-spacing: .02em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      letter-spacing: .06em;
+      font-weight: 400;
+    }
+
+    /* ─── Bio Text ─── */
+    .bio-text {
+      font-size: 15.5px;
+      line-height: 1.95;
+      color: var(--text);
+      font-weight: 300;
+      margin-bottom: 1em;
+    }
+
+    .bio-text:last-child { margin-bottom: 0; }
+
+    /* Visually highlight key statistics inline */
+    .bio-text strong {
+      font-weight: 500;
+      color: var(--navy);
+    }
+
+    /* ─── Links Section ─── */
+    .links-section { }
+
+    .links-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .links-heading h2 {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy-dark);
+      letter-spacing: .1em;
+      white-space: nowrap;
+    }
+
+    .links-heading-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* ─── Link Card ─── */
+    .link-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 20px 16px;
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .22s ease, transform .22s ease, border-color .22s ease;
+      min-height: 90px;
+    }
+
+    /* Sliding top bar on hover */
+    .link-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy), var(--navy-mid));
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform .28s cubic-bezier(.4,0,.2,1);
+    }
+
+    .link-card:hover {
+      border-color: rgba(139,94,60,.4);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .link-card:hover::before { transform: scaleX(1); }
+
+    .link-card-body { flex: 1; }
+
+    .link-card-title {
+      font-family: var(--serif);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--navy-dark);
+      line-height: 1.5;
+      margin-bottom: 5px;
+      transition: color .18s;
+    }
+
+    .link-card:hover .link-card-title { color: var(--navy-mid); }
+
+    .link-card-sub {
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: .04em;
+    }
+
+    .link-card-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .link-card-arrow {
+      width: 14px;
+      height: 14px;
+      color: var(--border);
+      transition: color .22s, transform .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    .link-card:hover .link-card-arrow {
+      color: var(--navy-mid);
+      transform: translate(3px, -3px);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,.4);
+      text-align: center;
+      padding: 16px 24px;
+      font-size: 11.5px;
+      letter-spacing: .1em;
+      flex-shrink: 0;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 680px) {
+      .bio-photo { width: 200px; }
+      .bio-content { padding: 24px 22px; }
+      .bio-name  { font-size: 32px; }
+      .links-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Stack vertically on small screens */
+    @media (max-width: 520px) {
+      .bio-card { flex-direction: column; }
+      .bio-photo { display: none; }
+      .bio-content { padding: 20px 20px; }
+      .bio-name { font-size: 28px; }
+      .bio-avatar {
+        display: block;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: top center;
+        border: 2.5px solid var(--gold);
+        box-shadow: 0 2px 8px rgba(176,120,72,.25);
+        flex-shrink: 0;
+        align-self: flex-start;
+      }
+      .bio-identity {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 12px;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+      }
+      .bio-identity-text {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 460px) {
+      main { padding: 32px 16px 52px; }
+      .bio-identity { gap: 8px; }
+      .bio-name { font-size: 26px; }
+      .bio-stats { flex-wrap: wrap; }
+      .stat-item { flex: 1 1 40%; border-bottom: 1px solid rgba(139,94,60,.15); }
+      .stat-item:nth-child(odd) { border-right: 1px solid rgba(139,94,60,.15); }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+      .links-grid { grid-template-columns: 1fr; }
+      .header-inner { padding: 16px 20px; }
+      .header-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <div class="header-inner">
+    <a href="https://tn.cpc.org.tw/" target="_blank" rel="noopener noreferrer">
+      <img
+        src="images/cpc_logo.png"
+        alt="中國生產力中心"
+        class="header-logo"
+        onerror="this.style.display='none'; document.getElementById('hlt').style.display='block';"
+      >
+      <span id="hlt" class="header-logo-text">CPC</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#bio" class="header-nav-link">個人介紹</a>
+      <a href="#links" class="header-nav-link">相關連結</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<main>
+
+  <!-- ── Personal Bio Card ── -->
+  <article id="bio" class="bio-card reveal d1">
+
+    <div class="bio-content">
+      <div class="bio-identity">
+        <img class="bio-avatar" src="images/lhl.png" alt="林夏蘭">
+        <div class="bio-identity-text">
+          <span class="bio-role">課程負責人</span>
+          <span class="bio-name">林夏蘭</span>
+          <span class="bio-title">台南服務處 助理管理師</span>
+        </div>
+      </div>
+      <div class="bio-contact">
+        <div class="contact-item">
+          <!-- Phone icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          (06)2134413 分機 03307
+        </div>
+        <div class="contact-item">
+          <!-- Email icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <a href="mailto:03307@cpc.tw">03307@cpc.tw</a>
+        </div>
+      </div>
+
+      <div class="bio-stats">
+        <div class="stat-item">
+          <span class="stat-num">650+</span>
+          <span class="stat-label">公開班次</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">6,000+</span>
+          <span class="stat-label">學員人次</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">30</span>
+          <span class="stat-label">企業客戶</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">55</span>
+          <span class="stat-label">企業內訓班次</span>
+        </div>
+      </div>
+
+      <p class="bio-text">現任財團法人中國生產力中心台南服務處教育訓練承辦人，具近四年專職辦訓實務經驗。過去曾任語文中心業務部、工業區協會秘書及公會總幹事，熟悉產業、公協會與企業組織運作模式，具高度溝通協調與專案統籌能力。</p>
+      <p class="bio-text">擅長課程規劃設計、招生廣宣企劃與講師專業媒合，協助企業有效建構年度人才訓練藍圖。</p>
+    </div>
+
+    <div class="bio-photo">
+      <img src="images/lhl.png" alt="林夏蘭">
+    </div>
+
+  </article>
+
+  <!-- ── Related Links ── -->
+  <section id="links" class="links-section">
+
+    <div class="links-heading reveal d2">
+      <h2>相關連結</h2>
+      <div class="links-heading-rule"></div>
+    </div>
+
+    <div class="links-grid">
+
+      <a href="https://cpc-engineering-intro.pages.dev/" target="_blank" rel="noopener noreferrer"
+         class="link-card reveal d3">
+        <div class="link-card-body">
+          <div class="link-card-title">非證照工程系列課程</div>
+          <div class="link-card-sub">台南服務處課程推薦</div>
+        </div>
+        <div class="link-card-footer">
+          <svg class="link-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="https://cpc-training-intro.pages.dev/" target="_blank" rel="noopener noreferrer"
+         class="link-card reveal d4">
+        <div class="link-card-body">
+          <div class="link-card-title">企業內訓課程</div>
+          <div class="link-card-sub">台南服務處課程推薦</div>
+        </div>
+        <div class="link-card-footer">
+          <svg class="link-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="https://cpc-common-intro.pages.dev/" target="_blank" rel="noopener noreferrer"
+         class="link-card reveal d5">
+        <div class="link-card-body">
+          <div class="link-card-title">生品管, 研發, 採購, 總務行政<br>系列課程</div>
+          <div class="link-card-sub">台南服務處課程推薦</div>
+        </div>
+        <div class="link-card-footer">
+          <svg class="link-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="https://hch-intro.pages.dev/" target="_blank" rel="noopener noreferrer"
+         class="link-card reveal d6">
+        <div class="link-card-body">
+          <div class="link-card-title">徐景輝博士</div>
+          <div class="link-card-sub">講師課程簡介</div>
+        </div>
+        <div class="link-card-footer">
+          <svg class="link-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="https://cpc-cjy-intro.pages.dev/" target="_blank" rel="noopener noreferrer"
+         class="link-card reveal d7">
+        <div class="link-card-body">
+          <div class="link-card-title">周瑞勇博士</div>
+          <div class="link-card-sub">講師課程簡介</div>
+        </div>
+        <div class="link-card-footer">
+          <svg class="link-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  © 財團法人中國生產力中心台南服務處
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<style>
+  body { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
+  .page-title { font-size: 1.1rem; font-weight: 600; color: #2c1a0e; margin-bottom: 0.25rem; }
+  .page-sub { font-size: 0.85rem; color: #8b5e3c; margin-bottom: 2rem; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 12px rgba(44,26,14,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(44,26,14,0.15); }
+  .card.selected { border-color: #b07848; box-shadow: 0 4px 20px rgba(176,120,72,0.3); }
+
+  .card-label {
+    background: #2c1a0e;
+    color: #f0e6d8;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-label .tag {
+    background: #b07848;
+    color: #fff;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.65rem;
+  }
+
+  .card-preview {
+    padding: 1rem;
+    background: #faf6f0;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* === Option A: Full editorial photo === */
+  .preview-a {
+    width: 100%;
+    display: flex;
+    gap: 0.6rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(44,26,14,0.1);
+  }
+  .preview-a .text-col {
+    flex: 1;
+    padding: 0.75rem;
+  }
+  .preview-a .name { font-size: 1rem; font-weight: 700; color: #2c1a0e; line-height: 1.2; }
+  .preview-a .title { font-size: 0.65rem; color: #8b5e3c; margin-top: 0.2rem; }
+  .preview-a .bio-lines { margin-top: 0.5rem; }
+  .preview-a .bio-lines div { height: 5px; background: #e8ddd4; border-radius: 3px; margin-bottom: 4px; }
+  .preview-a .photo-col {
+    width: 70px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .preview-a .photo-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  /* === Option B: Circular avatar === */
+  .preview-b {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem 0.75rem;
+    box-shadow: 0 1px 6px rgba(44,26,14,0.1);
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .preview-b .avatar-wrap {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .avatar-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2.5px solid #b07848;
+    box-shadow: 0 2px 8px rgba(176,120,72,0.25);
+    flex-shrink: 0;
+  }
+  .avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .preview-b .text-col { flex: 1; }
+  .preview-b .name { font-size: 1rem; font-weight: 700; color: #2c1a0e; }
+  .preview-b .title { font-size: 0.65rem; color: #8b5e3c; margin-top: 0.15rem; }
+  .preview-b .bio-lines { margin-top: 0.5rem; }
+  .preview-b .bio-lines div { height: 5px; background: #e8ddd4; border-radius: 3px; margin-bottom: 4px; }
+
+  /* === Option C: Framed portrait card === */
+  .preview-c {
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(44,26,14,0.1);
+    overflow: hidden;
+    display: flex;
+    gap: 0;
+  }
+  .preview-c .photo-frame {
+    width: 72px;
+    flex-shrink: 0;
+    position: relative;
+    background: #f0e6d8;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0.6rem;
+  }
+  .preview-c .photo-frame img {
+    width: 56px;
+    height: 70px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 6px;
+    border: 2px solid #b07848;
+    display: block;
+  }
+  .preview-c .text-col {
+    flex: 1;
+    padding: 0.75rem;
+    border-left: 3px solid #b07848;
+  }
+  .preview-c .name { font-size: 1rem; font-weight: 700; color: #2c1a0e; }
+  .preview-c .title { font-size: 0.65rem; color: #8b5e3c; margin-top: 0.15rem; }
+  .preview-c .bio-lines { margin-top: 0.5rem; }
+  .preview-c .bio-lines div { height: 5px; background: #e8ddd4; border-radius: 3px; margin-bottom: 4px; }
+
+  .card-desc {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #f0e6d8;
+  }
+  .card-desc h3 { font-size: 0.85rem; font-weight: 700; color: #2c1a0e; margin: 0 0 0.25rem; }
+  .card-desc p { font-size: 0.75rem; color: #6b4c30; margin: 0; line-height: 1.5; }
+  .pros { font-size: 0.7rem; color: #5a7a50; margin-top: 0.35rem; }
+  .cons { font-size: 0.7rem; color: #8b4444; margin-top: 0.15rem; }
+</style>
+
+<p class="page-title">照片呈現方式</p>
+<p class="page-sub">三種風格對比 — 點選你偏好的選項</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>A ｜ 全圖直式</span>
+      <span class="tag">現有設計</span>
+    </div>
+    <div class="card-preview">
+      <div class="preview-a">
+        <div class="text-col">
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師・課程負責人</div>
+          <div class="bio-lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+        <div class="photo-col">
+          <img src="/images/lhl.png" alt="林夏蘭">
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>全圖直式（Full Photo）</h3>
+      <p>照片佔滿右側，視覺完整、有份量感，展現專業形象。</p>
+      <div class="pros">✓ 最有視覺衝擊力，畫面平衡</div>
+      <div class="cons">✗ 若照片背景較複雜可能干擾排版</div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>B ｜ 圓形頭像</span>
+    </div>
+    <div class="card-preview">
+      <div class="preview-b">
+        <div class="avatar-wrap">
+          <div class="avatar-circle">
+            <img src="/images/lhl.png" alt="林夏蘭">
+          </div>
+        </div>
+        <div class="text-col">
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師・課程負責人</div>
+          <div class="bio-lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>圓形頭像（Avatar）</h3>
+      <p>圓框裁切人臉，親切感強，常見於個人介紹或名片風格。</p>
+      <div class="pros">✓ 現代感、親和力高，重點在臉</div>
+      <div class="cons">✗ 肩膀/全身資訊消失，稍顯非正式</div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>C ｜ 方形框照</span>
+    </div>
+    <div class="card-preview">
+      <div class="preview-c">
+        <div class="photo-frame">
+          <img src="/images/lhl.png" alt="林夏蘭">
+        </div>
+        <div class="text-col">
+          <div class="name">林夏蘭</div>
+          <div class="title">助理管理師・課程負責人</div>
+          <div class="bio-lines">
+            <div style="width:90%"></div>
+            <div style="width:85%"></div>
+            <div style="width:88%"></div>
+            <div style="width:70%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>方形框照（Framed Portrait）</h3>
+      <p>有框線的小型方形照，搭配左側金色邊條，兼顧正式與設計感。</p>
+      <div class="pros">✓ 正式感適中，排版靈活</div>
+      <div class="cons">✗ 照片較小，細節較不突出</div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,292 @@
+<h2>自由設計版</h2>
+<p class="subtitle">重新詮釋 Bio 區塊的視覺語言</p>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@700&display=swap');
+
+.creative-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.design-note {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 12px;
+  color: #7a6555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  background: #fdf9f5;
+  border-left: 3px solid #c4956a;
+  border-radius: 0 6px 6px 0;
+}
+
+/* ============================================
+   CREATIVE BIO CARD
+   Left border accent · Horizontal stats strip ·
+   Large display name · Clean photo right panel
+   ============================================ */
+
+.bio-creative {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(44,26,14,.1), 0 1px 4px rgba(44,26,14,.06);
+  overflow: hidden;
+  border-left: 4px solid #8b5e3c;
+  position: relative;
+}
+
+/* Content side */
+.bc-content {
+  flex: 1;
+  min-width: 0;
+  padding: 36px 38px 32px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #fefcfa 0%, #fff 60%);
+}
+
+/* Top: role tag */
+.bc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #8b5e3c;
+  letter-spacing: .2em;
+  background: #f5ede4;
+  padding: 4px 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(139,94,60,.25);
+  width: fit-content;
+  margin-bottom: 14px;
+}
+.bc-tag::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #8b5e3c;
+  border-radius: 50%;
+}
+
+/* Name block */
+.bc-name-block {
+  margin-bottom: 6px;
+}
+.bc-name {
+  font-family: 'Noto Serif TC', Georgia, serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #2c1a0e;
+  letter-spacing: .12em;
+  line-height: 1;
+  display: block;
+}
+.bc-position {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 13px;
+  color: #7a6555;
+  font-weight: 400;
+  letter-spacing: .06em;
+  margin-top: 6px;
+  display: block;
+}
+
+/* Separator */
+.bc-rule {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(to right, #8b5e3c, transparent);
+  border: none;
+  margin: 16px 0;
+}
+
+/* Contact */
+.bc-contact {
+  display: flex;
+  gap: 20px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 13px;
+  color: #5a3e2b;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.bc-contact a {
+  color: #5a3e2b;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(90,62,43,.3);
+  transition: color .15s, border-color .15s;
+}
+.bc-contact a:hover { color: #8b5e3c; border-color: #8b5e3c; }
+
+/* Stats strip */
+.bc-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #f5ede4;
+  border: 1px solid rgba(139,94,60,.18);
+  border-radius: 6px;
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+.bc-stat {
+  flex: 1;
+  padding: 12px 10px 10px;
+  text-align: center;
+  border-right: 1px solid rgba(139,94,60,.15);
+}
+.bc-stat:last-child { border-right: none; }
+.bc-stat-num {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2c1a0e;
+  letter-spacing: .02em;
+  line-height: 1;
+  display: block;
+}
+.bc-stat-lbl {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10px;
+  color: #8b5e3c;
+  letter-spacing: .08em;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Bio text */
+.bc-text {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 14.5px;
+  line-height: 2;
+  color: #3d2b1f;
+  font-weight: 300;
+  margin: 0;
+}
+.bc-text + .bc-text {
+  margin-top: .8em;
+}
+.bc-text strong {
+  font-weight: 500;
+  color: #2c1a0e;
+}
+
+/* Photo side */
+.bc-photo {
+  width: 255px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.bc-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.bc-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  background: linear-gradient(160deg, #d8c9b8 0%, #c4aa93 40%, #b89880 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+.bc-photo-name {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 13px;
+  color: rgba(255,255,255,.9);
+  letter-spacing: .15em;
+  background: rgba(44,26,14,.25);
+  padding: 4px 14px;
+  border-radius: 2px;
+}
+/* Subtle left blend */
+.bc-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(255,253,250,.3) 0%, transparent 25%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* Bottom vignette */
+.bc-photo::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(44,26,14,.18) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+</style>
+
+<div class="creative-wrap">
+  <div class="design-note">
+    <strong>設計方向：</strong>
+    左側邊框用金色取代頂部邊框，強調縱向層次。名字放大至 42px，作為視覺主角。統計數字改為橫向帶狀（非格子），更緊湊。照片右側佔約 31%，無漸層出血，與左側內容形成乾淨的垂直切線。整體比現行設計更有「人物簡介」的 editorial 感。
+  </div>
+
+  <div class="bio-creative">
+    <div class="bc-content">
+      <span class="bc-tag">課程負責人</span>
+
+      <div class="bc-name-block">
+        <span class="bc-name">林夏蘭</span>
+        <span class="bc-position">財團法人中國生產力中心台南服務處　助理管理師</span>
+      </div>
+
+      <hr class="bc-rule">
+
+      <div class="bc-contact">
+        <span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8b5e3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (06)2134413 分機 03307
+        </span>
+        <span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8b5e3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <a href="mailto:03307@cpc.tw">03307@cpc.tw</a>
+        </span>
+      </div>
+
+      <div class="bc-stats">
+        <div class="bc-stat">
+          <span class="bc-stat-num">650+</span>
+          <span class="bc-stat-lbl">公開班次</span>
+        </div>
+        <div class="bc-stat">
+          <span class="bc-stat-num">6,000+</span>
+          <span class="bc-stat-lbl">學員人次</span>
+        </div>
+        <div class="bc-stat">
+          <span class="bc-stat-num">30</span>
+          <span class="bc-stat-lbl">企業客戶</span>
+        </div>
+        <div class="bc-stat">
+          <span class="bc-stat-num">55</span>
+          <span class="bc-stat-lbl">企業內訓班次</span>
+        </div>
+      </div>
+
+      <p class="bc-text">現任財團法人中國生產力中心台南服務處教育訓練承辦人，具近四年專職辦訓實務經驗。過去曾任語文中心業務部、工業區協會秘書及公會總幹事，熟悉產業、公協會與企業組織運作模式，具高度溝通協調與專案統籌能力。</p>
+      <p class="bc-text">擅長課程規劃設計、招生廣宣企劃與講師專業媒合，協助企業有效建構年度人才訓練藍圖；企業內訓包班服務累積服務<strong>30家企業</strong>、<strong>55班次</strong>，逾 <strong>1,000人次</strong>學員。</p>
+    </div>
+
+    <div class="bc-photo">
+      <img src="/images/lhl.png" alt="林夏蘭" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="bc-photo-placeholder" style="display:none;">
+        <span class="bc-photo-name">林夏蘭</span>
+      </div>
+    </div>
+  </div>
+</div>

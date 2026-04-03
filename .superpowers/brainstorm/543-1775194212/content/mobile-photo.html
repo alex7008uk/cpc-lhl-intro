@@ -1,0 +1,250 @@
+<style>
+  body { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
+  .page-title { font-size: 1.1rem; font-weight: 600; color: #2c1a0e; margin-bottom: 0.25rem; }
+  .page-sub { font-size: 0.85rem; color: #8b5e3c; margin-bottom: 2rem; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    align-items: start;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 12px rgba(44,26,14,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(44,26,14,0.15); }
+  .card.selected { border-color: #b07848; box-shadow: 0 4px 20px rgba(176,120,72,0.3); }
+
+  .card-label {
+    background: #2c1a0e;
+    color: #f0e6d8;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .tag {
+    background: #b07848;
+    color: #fff;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.6rem;
+    font-weight: 600;
+  }
+
+  /* Phone shell */
+  .phone {
+    background: #f5f0eb;
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin: 0.75rem;
+  }
+  .phone-screen {
+    background: #faf6f0;
+    border-radius: 4px;
+    overflow: hidden;
+    border-left: 3px solid #b07848;
+  }
+
+  /* Photo area */
+  .photo-strip {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .photo-strip img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .photo-strip::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Text stub */
+  .text-stub {
+    padding: 0.65rem 0.65rem 0.75rem;
+  }
+  .stub-badge {
+    display: inline-block;
+    background: #f0e6d8;
+    color: #8b5e3c;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 10px;
+    margin-bottom: 0.3rem;
+  }
+  .stub-name { font-size: 0.95rem; font-weight: 700; color: #2c1a0e; line-height: 1.2; }
+  .stub-title { font-size: 0.6rem; color: #8b5e3c; margin-top: 0.1rem; margin-bottom: 0.4rem; }
+  .stub-lines div { height: 4px; background: #e8ddd4; border-radius: 2px; margin-bottom: 4px; }
+
+  /* Card desc */
+  .card-desc {
+    padding: 0.65rem 0.85rem;
+    border-top: 1px solid #f0e6d8;
+  }
+  .card-desc h3 { font-size: 0.78rem; font-weight: 700; color: #2c1a0e; margin: 0 0 0.2rem; }
+  .card-desc p { font-size: 0.7rem; color: #6b4c30; margin: 0; line-height: 1.5; }
+  .tag-row { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.3rem; }
+  .t { font-size: 0.62rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 600; }
+  .tc { background: #e8f0e0; color: #3d6b2e; }
+  .tk { background: #f0e6d8; color: #8b5e3c; }
+</style>
+
+<p class="page-title">手機版照片位置</p>
+<p class="page-sub">四種配置方式 — 點選偏好的版本</p>
+
+<div class="cards">
+
+  <!-- Current -->
+  <div class="card" data-choice="current" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>現況</span>
+      <span class="tag">參考</span>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="photo-strip" style="height:90px">
+          <img src="/images/lhl.png" style="height:90px;object-position:center 20%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 65%,rgba(255,255,255,.7) 100%);pointer-events:none"></div>
+        </div>
+        <div class="text-stub">
+          <div class="stub-badge">課程負責人</div>
+          <div class="stub-name">林夏蘭</div>
+          <div class="stub-title">助理管理師</div>
+          <div class="stub-lines">
+            <div style="width:95%"></div>
+            <div style="width:88%"></div>
+            <div style="width:80%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>現況（橫條，220px）</h3>
+      <p>照片在上，橫向裁切，<code>center 20%</code>。</p>
+      <div class="tag-row">
+        <span class="t tk">高度 220px</span>
+        <span class="t tk">center 20%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taller, face centered -->
+  <div class="card" data-choice="tall-face" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>加高 · 臉置中</span>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="photo-strip" style="height:120px">
+          <img src="/images/lhl.png" style="height:120px;object-position:center 8%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(255,255,255,.8) 100%);pointer-events:none"></div>
+        </div>
+        <div class="text-stub">
+          <div class="stub-badge">課程負責人</div>
+          <div class="stub-name">林夏蘭</div>
+          <div class="stub-title">助理管理師</div>
+          <div class="stub-lines">
+            <div style="width:95%"></div>
+            <div style="width:88%"></div>
+            <div style="width:80%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>加高 + 臉部置中</h3>
+      <p>高度加大，調整 object-position 讓臉在畫面中央，底部漸層融合。</p>
+      <div class="tag-row">
+        <span class="t tc">高度 280px</span>
+        <span class="t tc">center 8%</span>
+        <span class="t tc">強漸層</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Short banner, show upper body -->
+  <div class="card" data-choice="short-top" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>短橫條 · 上半身</span>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="photo-strip" style="height:70px">
+          <img src="/images/lhl.png" style="height:70px;object-position:center top">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(255,255,255,.9) 100%);pointer-events:none"></div>
+        </div>
+        <div class="text-stub">
+          <div class="stub-badge">課程負責人</div>
+          <div class="stub-name">林夏蘭</div>
+          <div class="stub-title">助理管理師</div>
+          <div class="stub-lines">
+            <div style="width:95%"></div>
+            <div style="width:88%"></div>
+            <div style="width:80%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>短橫條（裝飾性）</h3>
+      <p>縮小高度，照片作為頂部裝飾色塊，重心在下方文字。</p>
+      <div class="tag-row">
+        <span class="t tc">高度 150px</span>
+        <span class="t tc">center top</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side by side mini layout -->
+  <div class="card" data-choice="side" onclick="toggleSelect(this)">
+    <div class="card-label">
+      <span>左右並排</span>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div style="display:flex;align-items:stretch;min-height:130px">
+          <div style="width:65px;flex-shrink:0;overflow:hidden;position:relative">
+            <img src="/images/lhl.png" style="width:65px;height:100%;object-fit:cover;object-position:top center;display:block">
+            <div style="position:absolute;inset:0;background:linear-gradient(to left,transparent 50%,rgba(255,255,255,.6) 100%);pointer-events:none"></div>
+          </div>
+          <div class="text-stub" style="flex:1;padding:0.65rem 0.5rem 0.75rem">
+            <div class="stub-badge">課程負責人</div>
+            <div class="stub-name">林夏蘭</div>
+            <div class="stub-title">助理管理師</div>
+            <div class="stub-lines">
+              <div style="width:95%"></div>
+              <div style="width:88%"></div>
+              <div style="width:80%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">
+      <h3>左右並排（維持桌機版邏輯）</h3>
+      <p>手機也維持照片右側（或左側）並排，不換成上下佈局。</p>
+      <div class="tag-row">
+        <span class="t tc">不換方向</span>
+        <span class="t tc">照片 65–80px 寬</span>
+      </div>
+    </div>
+  </div>
+
+</div>

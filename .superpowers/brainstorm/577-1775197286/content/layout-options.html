@@ -1,0 +1,240 @@
+<h2>bio-role / bio-name / bio-title 排版方式</h2>
+<p class="subtitle">三種方案，桌機與手機各自預覽。點選偏好的方案。</p>
+
+<style>
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .preview-card {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+    background: #fff;
+  }
+  .preview-card.selected {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99,102,241,.15);
+  }
+  .preview-label {
+    background: #f5f5f5;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: #555;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .preview-label .badge {
+    background: #6366f1;
+    color: #fff;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 11px;
+  }
+  .device-label {
+    font-size: 10px;
+    color: #999;
+    padding: 4px 14px;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+
+  /* ─── Shared mock styles ─── */
+  .mock-profile {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    background: #fff8f3;
+    font-family: Georgia, serif;
+  }
+  .mock-role {
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #8b5e3c;
+    background: #f5e8d8;
+    border: 1px solid rgba(139,94,60,.3);
+    border-radius: 3px;
+    padding: 2px 7px;
+    margin-bottom: 4px;
+  }
+  .mock-name {
+    color: #2c1a0e;
+    font-weight: 700;
+    letter-spacing: .06em;
+    line-height: 1.1;
+  }
+  .mock-title {
+    font-family: sans-serif;
+    color: #7a6555;
+    font-size: 11px;
+    letter-spacing: .04em;
+  }
+  .mock-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#d4a47c,#8b5e3c);
+    border: 2px solid #8b5e3c;
+    flex-shrink: 0;
+  }
+  .mock-avatar-sm {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#d4a47c,#8b5e3c);
+    border: 2px solid #8b5e3c;
+    flex-shrink: 0;
+  }
+
+  /* ─── Option A: 垂直堆疊 ─── */
+  .optA-desktop .mock-profile {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .optA-desktop .mock-name { font-size: 22px; }
+  .optA-mobile .mock-profile {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .optA-mobile .mock-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .optA-mobile .mock-name { font-size: 16px; }
+
+  /* ─── Option B: 名字最大，role + title 在名字下方同一行 ─── */
+  .optB-desktop .mock-profile { display: flex; flex-direction: column; gap: 3px; }
+  .optB-desktop .mock-name { font-size: 22px; margin: 2px 0; }
+  .optB-desktop .mock-sub { display: flex; align-items: center; gap: 8px; }
+  .optB-mobile .mock-profile {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .optB-mobile .mock-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .optB-mobile .mock-name { font-size: 16px; margin: 2px 0; }
+  .optB-mobile .mock-sub { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+  /* ─── Option C: 頭像上方，文字下方置中 ─── */
+  .optC-desktop .mock-profile { display: flex; flex-direction: column; gap: 2px; }
+  .optC-desktop .mock-name { font-size: 22px; }
+  .optC-mobile .mock-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 16px;
+  }
+  .optC-mobile .mock-name { font-size: 16px; }
+
+  .desc {
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+    border-top: 1px solid #eee;
+  }
+</style>
+
+<div class="preview-grid">
+
+  <!-- ─── Option A ─── -->
+  <div class="preview-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="preview-label"><span class="badge">A</span> 純垂直堆疊</div>
+
+    <div class="device-label">桌機</div>
+    <div class="optA-desktop">
+      <div class="mock-profile">
+        <span class="mock-role">課程負責人</span>
+        <span class="mock-name">林夏蘭</span>
+        <span class="mock-title">助理管理師</span>
+      </div>
+    </div>
+
+    <div class="device-label">手機（頭像右側）</div>
+    <div class="optA-mobile">
+      <div class="mock-profile">
+        <div class="mock-text">
+          <span class="mock-role">課程負責人</span>
+          <span class="mock-name">林夏蘭</span>
+          <span class="mock-title">助理管理師</span>
+        </div>
+        <div class="mock-avatar-sm"></div>
+      </div>
+    </div>
+
+    <div class="desc">桌機：role → name → title 三行垂直排。手機：文字靠左撐滿，頭像靠右對齊頂部。</div>
+  </div>
+
+  <!-- ─── Option B ─── -->
+  <div class="preview-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="preview-label"><span class="badge">B</span> 名字獨占一行，role＋title 同行</div>
+
+    <div class="device-label">桌機</div>
+    <div class="optB-desktop">
+      <div class="mock-profile">
+        <span class="mock-name">林夏蘭</span>
+        <div class="mock-sub">
+          <span class="mock-role">課程負責人</span>
+          <span class="mock-title">助理管理師</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="device-label">手機（頭像右側）</div>
+    <div class="optB-mobile">
+      <div class="mock-profile">
+        <div class="mock-text">
+          <span class="mock-name">林夏蘭</span>
+          <div class="mock-sub">
+            <span class="mock-role">課程負責人</span>
+            <span class="mock-title">助理管理師</span>
+          </div>
+        </div>
+        <div class="mock-avatar-sm"></div>
+      </div>
+    </div>
+
+    <div class="desc">名字最醒目，佔一整行；role 標籤和職稱並排在名字下方。視覺層次最清晰。</div>
+  </div>
+
+  <!-- ─── Option C ─── -->
+  <div class="preview-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="preview-label"><span class="badge">C</span> 手機版頭像置頂置中</div>
+
+    <div class="device-label">桌機（同 A）</div>
+    <div class="optC-desktop">
+      <div class="mock-profile">
+        <span class="mock-role">課程負責人</span>
+        <span class="mock-name">林夏蘭</span>
+        <span class="mock-title">助理管理師</span>
+      </div>
+    </div>
+
+    <div class="device-label">手機（頭像置頂置中）</div>
+    <div class="optC-mobile">
+      <div class="mock-profile">
+        <div class="mock-avatar"></div>
+        <span class="mock-name">林夏蘭</span>
+        <span class="mock-role">課程負責人</span>
+        <span class="mock-title">助理管理師</span>
+      </div>
+    </div>
+
+    <div class="desc">手機版改為頭像置頂置中、文字下方置中對齊，像名片風格。桌機維持垂直堆疊。</div>
+  </div>
+
+</div>
